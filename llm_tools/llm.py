@@ -12,13 +12,14 @@ from langchain.vectorstores import FAISS
 from pydantic.config import Extra
 
 from llm_tools.abstract import AbstractMixin, AbstractChain
+from llm_tools.condition import ConditionMixin, ConditionChain
 from llm_tools.memory import RememberOrExecuteChain, RememberOutputParser, MemoryMixin
 from llm_tools.refine import RefineMixin, RefineChain
 
 embeddings_model = OpenAIEmbeddings()
 
 
-class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, extra=Extra.allow):
+class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, extra=Extra.allow):
     """Wrapper around OpenAI large language models to augment it with memory
 
     To use, you should have the ``openai`` python package installed, and the
@@ -30,8 +31,11 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, extra=Extra.
                  remember_or_execute_chain: RememberOrExecuteChain = None,
                  abstract_chain: AbstractChain = None,
                  refine_chain: RefineChain = None,
+                 condition_chain: ConditionChain = None,
                  parser: RememberOutputParser = None,
-                 verbose=True, **kwargs
+                 verbose=True,
+                 # TODO: model name can be specified per mixin
+                 **kwargs
                  ):
         super().__init__(**kwargs)
         # TODO: offer more docarray backends
@@ -42,6 +46,8 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, extra=Extra.
         self.abstract_chain = abstract_chain or AbstractChain.from_llm(
             self.openai, verbose=verbose)
         self.refine_chain = refine_chain or RefineChain.from_llm(
+            self.openai, verbose=verbose)
+        self.condition_chain = condition_chain or ConditionChain.from_llm(
             self.openai, verbose=verbose)
         # TODO: actually not really needed here
         self.parser = parser or RememberOutputParser()
