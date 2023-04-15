@@ -13,11 +13,12 @@ from pydantic.config import Extra
 
 from llm_tools.abstract import AbstractMixin, AbstractChain
 from llm_tools.memory import RememberOrExecuteChain, RememberOutputParser, MemoryMixin
+from llm_tools.refine import RefineMixin, RefineChain
 
 embeddings_model = OpenAIEmbeddings()
 
 
-class MemoryOpenAI(OpenAIChat, MemoryMixin, AbstractMixin, extra=Extra.allow):
+class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, extra=Extra.allow):
     """Wrapper around OpenAI large language models to augment it with memory
 
     To use, you should have the ``openai`` python package installed, and the
@@ -28,15 +29,19 @@ class MemoryOpenAI(OpenAIChat, MemoryMixin, AbstractMixin, extra=Extra.allow):
                  memory: DocumentArray = None,
                  remember_or_execute_chain: RememberOrExecuteChain = None,
                  abstract_chain: AbstractChain = None,
+                 refine_chain: RefineChain = None,
                  parser: RememberOutputParser = None,
                  verbose=True, **kwargs
                  ):
         super().__init__(**kwargs)
+        # TODO: offer more docarray backends
         self.memory = memory or DocumentArray()
         self.openai = OpenAI(model_name=kwargs.get('model_name'))
         self.remember_or_execute_chain = remember_or_execute_chain or RememberOrExecuteChain.from_llm(
             self.openai, verbose=verbose)
         self.abstract_chain = abstract_chain or AbstractChain.from_llm(
+            self.openai, verbose=verbose)
+        self.refine_chain = refine_chain or RefineChain.from_llm(
             self.openai, verbose=verbose)
         # TODO: actually not really needed here
         self.parser = parser or RememberOutputParser()
@@ -56,6 +61,7 @@ class MemoryOpenAI(OpenAIChat, MemoryMixin, AbstractMixin, extra=Extra.allow):
             # TODO: actually fit as much context as possible
             # TODO: add remember API
             remembered_elements = self.remember(parsed['value'], limit=5)
+            print('remembered elements', remembered_elements)
             # TODO: keep prompting to remember until a condition is met
             result = self.remember_or_execute_chain.predict(prompt=prompt, context='\n'.join(remembered_elements))
             return LLMResult(generations=[[Generation(text=result)]])
@@ -76,13 +82,25 @@ class MemoryOpenAI(OpenAIChat, MemoryMixin, AbstractMixin, extra=Extra.allow):
 
 
 if __name__ == '__main__':
-    llm = MemoryOpenAI(model_name="gpt-3.5-turbo")
+    llm = ThinkGPT(model_name="gpt-3.5-turbo")
 
-    print(llm.abstract(observations=[
-        "in tunisian, I did not eat is \"ma khditech\"",
-        "I did not work is \"ma khdemtech\"",
-        "I did not go is \"ma mchitech\"",
-    ], instruction_hint="output the rule in french"))
+    # print(llm.abstract(observations=[
+    #     "in tunisian, I did not eat is \"ma khditech\"",
+    #     "I did not work is \"ma khdemtech\"",
+    #     "I did not go is \"ma mchitech\"",
+    # ], instruction_hint="output the rule in french"))
+
+    print(llm.refine(
+        content="""
+    import re
+        print('hello world')
+            """,
+        critics=[
+            'File "/Users/alaeddine/Library/Application Support/JetBrains/PyCharm2022.3/scratches/scratch_166.py", line 2',
+            "  print('hello world')",
+            'IndentationError: unexpected indent'
+        ],
+        instruction_hint="Fix the code snippet based on the error provided. Only provide the fixed code snippet between `` and nothing else."))
 
     # llm.teach("""
     # LangChain is a python framework for developing applications powered by language models.

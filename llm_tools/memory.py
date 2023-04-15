@@ -63,6 +63,9 @@ class MyDocument(BaseDoc):
 
 
 -----------------
+Let's start.
+Remember, if you don't know something, use the REMEMBER(<information>) command, don't say that you do not know.
+
 User request: {prompt}
 Context: {context}
 System: 
