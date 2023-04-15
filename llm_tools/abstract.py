@@ -10,6 +10,8 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from docarray import Document, DocumentArray
 
+from llm_tools.helper import LineSeparatorOutputParser
+
 examples = [
   {
     "observations": '\n'.join([
@@ -59,7 +61,7 @@ Rules:
 
 
 ABSTRACTION_PROMPT = FewShotPromptTemplate(
-    prefix="Infer a rule from the following observations. {instruction_hint}",
+    prefix="Infer rules from the following observations. Put each rule in a separate line. {instruction_hint}",
     # TODO: examples should be closes to the prefix/goal using example selector so they are easily applicable to specific use cases
     examples=examples,
     example_prompt=ABSTRACTION_EXAMPLE_PROMPT,
@@ -93,17 +95,14 @@ class AbstractChain(LLMChain):
         return super().predict(instruction_hint=instruction_hint, **kwargs)
 
 
+class AbstractMixin:
+    abstract_chain: AbstractChain
 
-class MemoryMixin:
-    memory: DocumentArray
-
-    def teach(self, concept: str, infer=False):
-        # todo: if infer=True, augment the concept and summerize it first
-        self.memory.append(Document(text=concept, embedding=np.asarray(embeddings_model.embed_query(concept))))
-
-    def remember(self, concept: str, limit: int = 5) -> List[str]:
-        docs = self.memory.find(np.asarray(embeddings_model.embed_query(concept)), limit=limit)
-        return [doc.text for doc in docs]
+    def abstract(self, observations: List[str], instruction_hint: str = '') -> List[str]:
+        result = self.abstract_chain.predict(
+            observations="\n".join(observations), instruction_hint=instruction_hint
+        )
+        return LineSeparatorOutputParser().parse(result)
 
 
 if __name__ == '__main__':
@@ -112,4 +111,4 @@ if __name__ == '__main__':
         "in tunisian, I did not eat is \"ma khditech\"",
         "I did not work is \"ma khdemtech\"",
         "I did not go is \"ma mchitech\"",
-    ]), context='Nothing'))
+    ]), instruction_hint="output the rule in french"))
