@@ -1,7 +1,7 @@
 # ThinkGPT 🧠🤖
 ThinkGPT is a Python library aimed at implementing Chain of Thoughts for Large Language Models (LLMs), prompting the model to think, reason, and to create generative agents. 
 The library aims to help with the following:
-* solve limited context with long memory
+* solve limited context with long memory and compressed knowledge
 * enhance LLMs' one-shot reasoning with higher order reasoning primitives
 * add intelligent decisions to your code base
 
@@ -40,6 +40,7 @@ llm.memorize([
 
 print(llm.remember('Sending data with DocArray'))
 ```
+This is inspired by [the Generative Agents: Interactive Simulacra of Human Behavior paper](https://arxiv.org/abs/2304.03442).
 
 ### Predicting with context from long memory
 ```python
@@ -68,7 +69,10 @@ import re
 print('hello world')
 ```
 
+One of the applications is self-healing code generation implemented by projects like [gptdeploy](https://github.com/jina-ai/gptdeploy) and [wolverine](https://github.com/biobootloader/wolverine)
+
 ### Induce rules from observations
+Amount to higher level and more general observations from current observations:
 ```python
 llm.abstract(observations=[
     "in tunisian, I did not eat is \"ma khditech\"",
@@ -81,7 +85,11 @@ llm.abstract(observations=[
 ['Negation in Tunisian Arabic uses "ma" + verb + "tech" where "ma" means "not" and "tech" at the end indicates the negation in the past tense.']
 ```
 
+This can help you end up with compressed knowledge that fits better the limited context length of LLMs.
+For instance, instead of trying to fit code examples in the LLM's context, use this to prompt it to understand high level rules and fit them in the context.
+
 ### Natural language condition
+Introduce intelligent conditions to your code and let the LLM make decisions
 ```python
 llm.condition(f'Does this represent an error message ? "IndentationError: unexpected indent"')
 ```
@@ -89,6 +97,7 @@ llm.condition(f'Does this represent an error message ? "IndentationError: unexpe
 True
 ```
 ### Natural language select
+Alternatively, let the LLM select one choice among a list of options:
 ```python
 llm.select(question="Which animal is the king of the jungle?", options=["Lion", "Elephant", "Tiger", "Giraffe"])
 ```
@@ -96,11 +105,10 @@ llm.select(question="Which animal is the king of the jungle?", options=["Lion", 
 Lion
 ```
 
-For more detailed usage and code examples, please refer to the provided code snippets in the ThinkGPT repository.
 
 ## Use Cases 🚀
 Find out below example demos you can do with `thinkgpt`
-### Teaching GPT a new language
+### Teaching ThinkGPT a new language
 ```python
 from thinkgpt.llm import ThinkGPT
 
@@ -122,7 +130,7 @@ llm.predict(task, remember=llm.remember(task))
 The translation of "I didn't study" to Tunisian language would be "ma 9ritech".
 ```
 
-### Teaching `thinkgpt` to the LLM
+### Teaching ThinkGPT how to code with `thinkgpt` library
 ```python
 from thinkgpt.llm import ThinkGPT
 from examples.knowledge_base import knowledge
@@ -174,3 +182,5 @@ refined "the second number in Fibonacci sequence is 2" into "Observation: The se
 ...
 ```
 
+
+For more detailed usage and code examples check `./examples`.
