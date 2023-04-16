@@ -45,10 +45,12 @@ class MemoryMixin:
         else:
             raise ValueError('wrong type, must be either str, Document, DocumentArray, List')
 
-    def remember(self, concept: Union[str, Document], limit: int = 5, sort_by_order: bool = False) -> List[str]:
+    def remember(self, concept: Union[str, Document] = None, limit: int = 5, sort_by_order: bool = False) -> List[str]:
         if len(self.memory) == 0:
             return []
-        if isinstance(concept, str):
+        if concept is None:
+            return [doc.text for doc in self.memory[-limit:]]
+        elif isinstance(concept, str):
             query_input = Document(embedding=np.asarray(embeddings_model.embed_query(concept)))
         elif isinstance(concept, Document):
             assert concept.embedding is not None
