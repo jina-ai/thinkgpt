@@ -61,7 +61,7 @@ Rules:
 
 
 ABSTRACTION_PROMPT = FewShotPromptTemplate(
-    prefix="Infer rules from the following observations. Put each rule in a separate line. {instruction_hint}",
+    prefix="Extract rules from the following observations. Put each rule in a separate line. {instruction_hint}",
     # TODO: examples should be closes to the prefix/goal using example selector so they are easily applicable to specific use cases
     examples=examples,
     example_prompt=ABSTRACTION_EXAMPLE_PROMPT,
