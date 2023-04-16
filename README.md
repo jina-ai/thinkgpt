@@ -12,6 +12,7 @@ The library aims to help with the following:
 * Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
 * Inference 💡️: Make educated guesses based on available information
 * Natural Language Conditions 📝: Easily express tasks and conditions in natural language
+* Extremely easy setup and pythonic API thanks to [DocArray](https://github.com/docarray/docarray)
 
 ## Installation 💻
 You can install ThinkGPT using pip:
@@ -45,6 +46,8 @@ print(llm.remember('Sending data with DocArray', limit=1))
 
 ### Predicting with context from long memory
 ```python
+from examples.knowledge_base import knowledge
+llm.memorize(knowledge)
 llm.predict('Implement a DocArray schema with 2 fields: image and TorchTensor', remember=llm.remember('DocArray schemas and types'))
 ```
 
@@ -98,9 +101,12 @@ llm.condition(f'Does this represent an error message ? "IndentationError: unexpe
 True
 ```
 ### Natural language select
-Alternatively, let the LLM select one choice among a list of options:
+Alternatively, let the LLM choose among a list of options:
 ```python
-llm.select(question="Which animal is the king of the jungle?", options=["Lion", "Elephant", "Tiger", "Giraffe"])
+llm.select(
+    question="Which animal is the king of the jungle?",
+    options=["Lion", "Elephant", "Tiger", "Giraffe"]
+)
 ```
 ```text
 Lion
