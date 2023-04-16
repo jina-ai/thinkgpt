@@ -10,7 +10,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from docarray import Document, DocumentArray
 
-from llm_tools.helper import LineSeparatorOutputParser
+from thinkgpt.helper import LineSeparatorOutputParser
 
 examples = [
   {

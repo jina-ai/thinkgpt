@@ -35,13 +35,13 @@ class MyDocument(BaseDoc:
     image_tensor: TorchTensor[1704, 2272, 3]  # you can express tensor shapes!
     """,
     """
-llm_tools is a library to prompt LLMs to perform thinking actions
+thinkgpt is a library to prompt LLMs to perform thinking actions
     """,
     """
-import ThinkGPT from llm_tools: from llm_tools.llm import ThinkGPT
+import ThinkGPT from thinkgpt: from thinkgpt.llm import ThinkGPT
     """,
     """
-instantiate an llm instance from llm_tools: llm = ThinkGPT(model_name="gpt-3.5-turbo")
+instantiate an llm instance from thinkgpt: llm = ThinkGPT(model_name="gpt-3.5-turbo")
     """,
     """
 memorize information: llm.memorize('DocArray V2 allows you to represent your data, in an ML-native way')

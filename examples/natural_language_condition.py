@@ -1,5 +1,5 @@
 from examples.knowledge_base import knowledge
-from llm_tools.llm import ThinkGPT
+from thinkgpt.llm import ThinkGPT
 
 llm = ThinkGPT(model_name="gpt-3.5-turbo")
 

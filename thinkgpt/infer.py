@@ -5,7 +5,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.llms import OpenAI, BaseLLM, OpenAIChat
 from langchain.prompts.few_shot import FewShotPromptTemplate
 
-from llm_tools.helper import LineSeparatorOutputParser
+from thinkgpt.helper import LineSeparatorOutputParser
 
 INFERENCE_EXAMPLE_PROMPT = PromptTemplate(template="""
 Facts:

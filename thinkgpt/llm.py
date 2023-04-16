@@ -6,14 +6,14 @@ from langchain.schema import LLMResult, BaseOutputParser, Generation
 from langchain.embeddings import OpenAIEmbeddings
 from docarray import DocumentArray, Document
 from pydantic.config import Extra
-from llm_tools.helper import PythonREPL
+from thinkgpt.helper import PythonREPL
 
-from llm_tools.abstract import AbstractMixin, AbstractChain
-from llm_tools.condition import ConditionMixin, ConditionChain
-from llm_tools.infer import InferMixin, InferChain
-from llm_tools.memory import MemoryMixin, ExecuteWithContextChain
-from llm_tools.refine import RefineMixin, RefineChain
-from llm_tools.select import SelectChain, SelectMixin
+from thinkgpt.abstract import AbstractMixin, AbstractChain
+from thinkgpt.condition import ConditionMixin, ConditionChain
+from thinkgpt.infer import InferMixin, InferChain
+from thinkgpt.memory import MemoryMixin, ExecuteWithContextChain
+from thinkgpt.refine import RefineMixin, RefineChain
+from thinkgpt.select import SelectChain, SelectMixin
 
 embeddings_model = OpenAIEmbeddings()
 
