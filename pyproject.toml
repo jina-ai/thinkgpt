@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "thinkgpt"
+version = "0.0.1"
+description = "ThinkGPT is a Python library aimed at implementing Chain of Thoughts for Large Language Models (LLMs), prompting the model to think, reason, and to create generative agents."
+authors = ["Alaeddine Abdessalem <alaeddine-13@live.fr>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.7,<4.0"
+openai = "^0.27.4"
+tiktoken = "^0.3.3"
+docarray = "<=0.21.0"
+langchain = "^0.0.141"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
