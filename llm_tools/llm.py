@@ -12,11 +12,12 @@ from llm_tools.abstract import AbstractMixin, AbstractChain
 from llm_tools.condition import ConditionMixin, ConditionChain
 from llm_tools.memory import MemoryMixin, ExecuteWithContextChain
 from llm_tools.refine import RefineMixin, RefineChain
+from llm_tools.select import SelectChain, SelectMixin
 
 embeddings_model = OpenAIEmbeddings()
 
 
-class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, extra=Extra.allow):
+class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, extra=Extra.allow):
     """Wrapper around OpenAI large language models to augment it with memory
 
     To use, you should have the ``openai`` python package installed, and the
@@ -29,6 +30,7 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
                  abstract_chain: AbstractChain = None,
                  refine_chain: RefineChain = None,
                  condition_chain: ConditionChain = None,
+                 select_chain: SelectChain = None,
                  verbose=True,
                  # TODO: model name can be specified per mixin
                  **kwargs
@@ -45,8 +47,8 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
             self.openai, verbose=verbose)
         self.condition_chain = condition_chain or ConditionChain.from_llm(
             self.openai, verbose=verbose)
+        self.select_chain = select_chain or SelectChain.from_llm(self.openai, verbose=verbose)
         self.mem_cnt = 0
-        # TODO: actually not really needed here
 
 
     def generate(
