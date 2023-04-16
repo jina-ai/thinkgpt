@@ -75,25 +75,15 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
 if __name__ == '__main__':
     llm = ThinkGPT(model_name="gpt-3.5-turbo")
 
-    task = 'Implement python code that uses llm_tools to learn about docarray v2 code and then predict with remembered information about docarray v2. Only give the code between `` and nothing else'
-    code = llm.predict(task, remember=llm.remember(task, limit=10, sort_by_order=True))
-    # introduce a bug to the code
-    code = '  ' + code
-    output, error = PythonREPL().run(code.strip('`'))
-    if error:
-        code = llm.refine(
-            code,
-            instruction_hint='Fix the provided code. Only print the fixed code between `` and nothing else.',
-            critics=[error]
-        )
-    print(code)
+    rules = llm.abstract(observations=[
+        "in tunisian, I did not eat is \"ma khditech\"",
+        "I did not work is \"ma khdemtech\"",
+        "I did not go is \"ma mchitech\"",
+    ], instruction_hint="output the rule in french")
+    llm.memorize(rules)
 
-    # print(
-    #     llm.predict('generate python code that uses langchain to send a request to OpenAI LLM and ask it suggest 3 recipes using gpt-4 model', remember=5))
+    llm.memorize("in tunisian, I went is \"mchit\"")
 
-    # task = 'generate python code that uses langchain to send a request to OpenAI LLM and ask it suggest 3 recipes using gpt-4 model'
-    # if not llm.condition(f'Do you know all the requirements to achieve the following task ? {task}'):
-    #     remember = llm.remember(task)
-    # else:
-    #     remember = 0
-    # print(llm.predict(task, remember=remember))
+    task = "translate to Tunisian: I didn't go"
+    print(llm.predict(task, remember=llm.remember(task)))
+
