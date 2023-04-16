@@ -77,10 +77,6 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
 
         return super().generate(prompts, stop=stop)
 
-    def remember(self, concept: str, limit: int = 5) -> List[str]:
-        docs = self.memory.find(np.asarray(embeddings_model.embed_query(concept)), limit=limit)
-        return [doc.text for doc in docs]
-
     def predict(
             self, prompt: str, stop: Optional[List[str]] = None, limit: int = 5
     ) -> str:

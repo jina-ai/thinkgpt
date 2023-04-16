@@ -1,5 +1,5 @@
 import re
-from typing import Dict, List
+from typing import Dict, List, Union
 
 import numpy as np
 from langchain import PromptTemplate, LLMChain
@@ -94,10 +94,26 @@ class RememberOrExecuteChain(LLMChain):
 class MemoryMixin:
     memory: DocumentArray
 
-    def teach(self, concept: str, infer=False):
-        # todo: if infer=True, augment the concept and summerize it first
-        self.memory.append(Document(text=concept, embedding=np.asarray(embeddings_model.embed_query(concept))))
+    def memorize(self, concept: Union[str, Document, DocumentArray, List]):
+        if isinstance(concept, str):
+            self.memory.append(Document(text=concept, embedding=np.asarray(embeddings_model.embed_query(concept))))
+        elif isinstance(concept, Document):
+            assert concept.embedding is not None
+            self.memory.append(concept)
+        elif isinstance(concept, (DocumentArray, list)):
+            for doc in concept:
+                self.memorize(doc)
+        else:
+            raise ValueError('wrong type, must be either str, Document, DocumentArray, List')
 
-    def remember(self, concept: str, limit: int = 5) -> List[str]:
-        docs = self.memory.find(np.asarray(embeddings_model.embed_query(concept)), limit=limit)
+    def remember(self, concept: Union[str, Document], limit: int = 5) -> List[str]:
+        if isinstance(concept, str):
+            query_input = Document(embedding=np.asarray(embeddings_model.embed_query(concept)))
+        elif isinstance(concept, Document):
+            assert concept.embedding is not None
+            query_input = concept
+        else:
+            raise ValueError('wrong type, must be either str or Document')
+
+        docs = self.memory.find(query_input, limit=limit)
         return [doc.text for doc in docs]
