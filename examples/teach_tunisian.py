@@ -9,7 +9,7 @@ rules = llm.abstract(observations=[
 ], instruction_hint="output the rule in french")
 llm.memorize(rules)
 
-llm.memorize("in tunisian, I went is \"mchit\"")
+llm.memorize("in tunisian, I studied is \"9rit\"")
 
-task = "translate to Tunisian: I didn't go"
+task = "translate to Tunisian: I didn't study"
 print(llm.predict(task, remember=llm.remember(task)))
