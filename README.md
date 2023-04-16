@@ -105,7 +105,6 @@ llm.select(question="Which animal is the king of the jungle?", options=["Lion", 
 Lion
 ```
 
-
 ## Use Cases 🚀
 Find out below example demos you can do with `thinkgpt`
 ### Teaching ThinkGPT a new language
@@ -181,6 +180,7 @@ python -m examples.replay_criticize_refine
 refined "the second number in Fibonacci sequence is 2" into "Observation: The second number in the Fibonacci sequence is actually 1, not 2, and the sequence starts with 0, 1."
 ...
 ```
+This technique was mainly implemented in the [the Self-Refine: Iterative Refinement with Self-Feedback paper](https://arxiv.org/abs/2303.17651)
 
 
 For more detailed usage and code examples check `./examples`.
