@@ -35,12 +35,13 @@ llm.predict('what is DocArray ?', remember=llm.remember('DocArray definition'))
 llm.memorize([
     'DocArray allows you to send your data, in an ML-native way.',
     'This means there is native support for Protobuf and gRPC, on top of HTTP and serialization to JSON, JSONSchema, Base64, and Bytes.',
-    ...
 ])
 
-print(llm.remember('Sending data with DocArray'))
+print(llm.remember('Sending data with DocArray', limit=1))
 ```
-This is inspired by [the Generative Agents: Interactive Simulacra of Human Behavior paper](https://arxiv.org/abs/2304.03442).
+```text
+['DocArray allows you to send your data, in an ML-native way.']
+```
 
 ### Predicting with context from long memory
 ```python
