@@ -196,7 +196,7 @@ For more detailed usage and code examples check `./examples`.
 P.S: here I'm just giving my point of view on LLM, shouldn't be considered a scientific argument.
 
 I believe that LLMs are good for one shot reasoning tasks, or what Daniel Kahneman calls [fast thinking](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow).
-However, they are not good at "slow thinking". In other words, LLMs are limited in their context length and reasoning capacity.
+However, [they are not good at "slow thinking"](https://arxiv.org/abs/2206.10498). In other words, LLMs are limited in their context length and reasoning capacity.
 
 They are not conscious that, when given a complex task, they need to recall previous information from memory, infer new observations or criticize their output.
 This project aims to offload this high-level thinking to the user through a programmatic API. It is up to the user to determine the thinking strategy and how to prompt GPT to reason according to their use case.
