@@ -7,12 +7,14 @@ The library aims to help with the following:
 
 
 ## Key Features ✨
-* Memory 🧠: GPTs that can remember experience
-* Self-refinement 🔧: Improve model-generated content by addressing critics
-* Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
-* Inference 💡️: Make educated guesses based on available information
-* Natural Language Conditions 📝: Easily express tasks and conditions in natural language
-* Extremely easy setup and pythonic API thanks to [DocArray](https://github.com/docarray/docarray)
+* Thinking building blocks 🧱:
+    * Memory 🧠: GPTs that can remember experience
+    * Self-refinement 🔧: Improve model-generated content by addressing critics
+    * Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
+    * Inference 💡️: Make educated guesses based on available information
+    * Natural Language Conditions 📝: Easily express choices and conditions in natural language
+* Efficient and Measurable GPT context length 📐
+* Extremely easy setup and pythonic API 🎯 thanks to [DocArray](https://github.com/docarray/docarray)
 
 ## Installation 💻
 You can install ThinkGPT using pip:
