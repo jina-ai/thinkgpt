@@ -13,12 +13,14 @@ from thinkgpt.condition import ConditionMixin, ConditionChain
 from thinkgpt.infer import InferMixin, InferChain
 from thinkgpt.memory import MemoryMixin, ExecuteWithContextChain
 from thinkgpt.refine import RefineMixin, RefineChain
-from thinkgpt.select import SelectChain, SelectMixin
+from thinkgpt.gpt_select import SelectChain, SelectMixin
+
+from thinkgpt.summarize import SummarizeMixin, SummarizeChain
 
 embeddings_model = OpenAIEmbeddings()
 
 
-class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, InferMixin, extra=Extra.allow):
+class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, InferMixin, SummarizeMixin, extra=Extra.allow):
     """Wrapper around OpenAI large language models to augment it with memory
 
     To use, you should have the ``openai`` python package installed, and the
@@ -33,6 +35,7 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
                  condition_chain: ConditionChain = None,
                  select_chain: SelectChain = None,
                  infer_chain: InferChain = None,
+                 summarize_chain: SummarizeChain = None,
                  verbose=True,
                  # TODO: model name can be specified per mixin
                  **kwargs
@@ -51,6 +54,7 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
             self.openai, verbose=verbose)
         self.select_chain = select_chain or SelectChain.from_llm(self.openai, verbose=verbose)
         self.infer_chain = infer_chain or InferChain.from_llm(self.openai, verbose=verbose)
+        self.summarize_chain = summarize_chain or SummarizeChain.from_llm(self.openai, verbose=verbose)  # Add this line
         self.mem_cnt = 0
 
 
@@ -91,4 +95,3 @@ if __name__ == '__main__':
 
     task = "translate to Tunisian: I didn't go"
     print(llm.predict(task, remember=llm.remember(task)))
-
