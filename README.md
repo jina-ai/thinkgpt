@@ -7,12 +7,14 @@ The library aims to help with the following:
 
 
 ## Key Features ✨
-* Memory 🧠: GPTs that can remember experience
-* Self-refinement 🔧: Improve model-generated content by addressing critics
-* Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
-* Inference 💡️: Make educated guesses based on available information
-* Natural Language Conditions 📝: Easily express tasks and conditions in natural language
-* Extremely easy setup and pythonic API thanks to [DocArray](https://github.com/docarray/docarray)
+* Thinking building blocks 🧱:
+    * Memory 🧠: GPTs that can remember experience
+    * Self-refinement 🔧: Improve model-generated content by addressing critics
+    * Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
+    * Inference 💡️: Make educated guesses based on available information
+    * Natural Language Conditions 📝: Easily express choices and conditions in natural language
+* Efficient and Measurable GPT context length 📐
+* Extremely easy setup and pythonic API 🎯 thanks to [DocArray](https://github.com/docarray/docarray)
 
 ## Installation 💻
 You can install ThinkGPT using pip:
@@ -192,11 +194,3 @@ This technique was mainly implemented in the [the Self-Refine: Iterative Refinem
 
 For more detailed usage and code examples check `./examples`.
 
-## Rationale: why did I build this project ?
-P.S: here I'm just giving my point of view on LLM, shouldn't be considered a scientific argument.
-
-I believe that LLMs are good for one shot reasoning tasks, or what Daniel Kahneman calls [fast thinking](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow).
-However, [they are not good at "slow thinking"](https://arxiv.org/abs/2206.10498). In other words, LLMs are limited in their context length and reasoning capacity.
-
-They are not conscious that, when given a complex task, they need to recall previous information from memory, infer new observations or criticize their output.
-This project aims to offload this high-level thinking to the user through a programmatic API. It is up to the user to determine the thinking strategy and how to prompt GPT to reason according to their use case.

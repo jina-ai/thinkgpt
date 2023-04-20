@@ -6,7 +6,7 @@ rules = llm.abstract(observations=[
     "in tunisian, I did not eat is \"ma khditech\"",
     "I did not work is \"ma khdemtech\"",
     "I did not go is \"ma mchitech\"",
-], instruction_hint="output the rule in french")
+])
 llm.memorize(rules)
 
 llm.memorize("in tunisian, I studied is \"9rit\"")
