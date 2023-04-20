@@ -74,8 +74,9 @@ class SelectChain(LLMChain):
 class SelectMixin:
     select_chain: SelectChain
 
-    def select(self, question: str, options: List[str], instruction_hint: str = '') -> str:
-        return self.select_chain.predict(question=question, options=options, instruction_hint=instruction_hint)
+    def select(self, question: str, options: List[str], instruction_hint: str = '', select_chain: Optional[SelectChain] = None) -> str:
+       chain = select_chain or self.select_chain
+       return chain.predict(question=question, options=options, instruction_hint=instruction_hint)
 
 
 if __name__ == '__main__':
