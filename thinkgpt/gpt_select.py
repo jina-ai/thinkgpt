@@ -40,13 +40,6 @@ def format_options(options: List[str]) -> str:
     return "\n".join(options)
 
 
-SELECT_PROMPT = FewShotPromptTemplate(
-    prefix="Choose the correct answer for the following question from the provided options. {instruction_hint}",
-    examples=SELECT_EXAMPLES,
-    example_prompt=SELECT_EXAMPLE_PROMPT,
-    suffix="Question:\n{question}\nOptions:\n{options_text}\nAnswer:\n",
-    input_variables=["instruction_hint", "question", "options_text"]
-)
 
 
 class SelectOutputParser(BaseOutputParser[Optional[str]]):
@@ -61,7 +54,14 @@ class SelectOutputParser(BaseOutputParser[Optional[str]]):
 class SelectChain(LLMChain):
 
     @classmethod
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
+    def from_llm(cls, llm: BaseLLM, select_examples: Optional[List] = None, verbose: bool = True) -> LLMChain:
+        SELECT_PROMPT = FewShotPromptTemplate(
+            prefix="Choose the correct answer for the following question from the provided options. {instruction_hint}",
+            examples=select_examples or SELECT_EXAMPLES,
+            example_prompt=SELECT_EXAMPLE_PROMPT,
+            suffix="Question:\n{question}\nOptions:\n{options_text}\nAnswer:\n",
+            input_variables=["instruction_hint", "question", "options_text"]
+        )
         return cls(prompt=SELECT_PROMPT, llm=llm, verbose=verbose)
 
     def predict(self, question: str, options: List[str], instruction_hint: str = '', **kwargs: Any) -> str:
