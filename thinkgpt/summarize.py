@@ -62,7 +62,7 @@ class SummarizeMixin:
             for chunk in chunks:
                 result += self.summarize(content=chunk, max_tokens=summary_size, instruction_hint=instruction_hint)
         else:
-            result = self.summarize(content=content, max_tokens=max_tokens, instruction_hint=instruction_hint)
+            return content
         return result
 
 

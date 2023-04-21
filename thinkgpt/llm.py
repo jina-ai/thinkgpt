@@ -17,7 +17,6 @@ from thinkgpt.gpt_select import SelectChain, SelectMixin
 
 from thinkgpt.summarize import SummarizeMixin, SummarizeChain
 
-embeddings_model = OpenAIEmbeddings()
 
 
 class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, InferMixin, SummarizeMixin, extra=Extra.allow):
@@ -43,6 +42,7 @@ class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
         super().__init__(**kwargs)
         # TODO: offer more docarray backends
         self.memory = memory or DocumentArray()
+        self.embeddings_model = OpenAIEmbeddings()
         self.openai = OpenAI(model_name=kwargs.get('model_name'))
         self.execute_with_context_chain = execute_with_context_chain or ExecuteWithContextChain.from_llm(
             self.openai, verbose=verbose)

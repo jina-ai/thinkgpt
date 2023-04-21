@@ -3,10 +3,9 @@ from typing import Dict, List, Union
 
 import numpy as np
 from langchain import PromptTemplate, LLMChain
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.llms import OpenAI, BaseLLM, OpenAIChat
 from docarray import Document, DocumentArray
-embeddings_model = OpenAIEmbeddings()
 
 
 EXECUTE_WITH_CONTEXT_PROMPT = PromptTemplate(template="""
@@ -29,11 +28,12 @@ class ExecuteWithContextChain(LLMChain):
 class MemoryMixin:
     memory: DocumentArray
     mem_cnt: int
+    embeddings_model: OpenAIEmbeddings
 
     def memorize(self, concept: Union[str, Document, DocumentArray, List]):
         self.mem_cnt += 1
         if isinstance(concept, str):
-            doc = Document(text=concept, embedding=np.asarray(embeddings_model.embed_query(concept)), tags={'mem_cnt': self.mem_cnt})
+            doc = Document(text=concept, embedding=np.asarray(self.embeddings_model.embed_query(concept)), tags={'mem_cnt': self.mem_cnt})
             self.memory.append(doc)
         elif isinstance(concept, Document):
             assert concept.embedding is not None
@@ -51,7 +51,7 @@ class MemoryMixin:
         if concept is None:
             return [doc.text for doc in self.memory[-limit:]]
         elif isinstance(concept, str):
-            query_input = Document(embedding=np.asarray(embeddings_model.embed_query(concept)))
+            query_input = Document(embedding=np.asarray(self.embeddings_model.embed_query(concept)))
         elif isinstance(concept, Document):
             assert concept.embedding is not None
             query_input = concept
