@@ -45,11 +45,8 @@ class SummarizeMixin:
         )
         return response
 
-    def chunked_summarize(self, content: str, max_tokens: int = 4096) -> str:
+    def chunked_summarize(self, content: str, max_tokens: int = 4096, instruction_hint: str = '') -> str:
         num_tokens = self.summarize_chain.llm.get_num_tokens(content)
-        # TODO: actually this is just for https://github.com/muellerberndt/micro-gpt, maybe just put it in the
-        #  downstream
-        instruction_hint = "Do your best to retain all semantic information including tasks performed by the agent, website content, important data points and hyper-links"
 
         if num_tokens > max_tokens:
             avg_chars_per_token = len(content) / num_tokens
