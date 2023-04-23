@@ -85,10 +85,6 @@ class AbstractChain(LLMChain):
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
-        if not (hasattr(llm, 'model_name') and llm.model_name == 'gpt-4'):
-            warnings.warn(
-                "Keep in mind that LLMs except 'gpt-4' do not exhibit as good abstraction abilities as gpt-4"
-            )
         return cls(prompt=ABSTRACTION_PROMPT, llm=llm, verbose=verbose)
 
     def predict(self, instruction_hint: str = '', **kwargs: Any) -> str:
