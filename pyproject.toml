@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "thinkgpt"
-version = "0.0.1"
+version = "0.0.2"
 description = "ThinkGPT is a Python library aimed at implementing Chain of Thoughts for Large Language Models (LLMs), prompting the model to think, reason, and to create generative agents."
 authors = ["Alaeddine Abdessalem <alaeddine-13@live.fr>"]
 license = "Apache 2.0"
