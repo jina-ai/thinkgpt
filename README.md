@@ -10,7 +10,7 @@ The library aims to help with the following:
 * Thinking building blocks 🧱:
     * Memory 🧠: GPTs that can remember experience
     * Self-refinement 🔧: Improve model-generated content by addressing critics
-    * Abstraction 🌐: Encourages LLMs to generalize rules from examples or observations
+    * Compress knowledge 🌐: Compress knowledge and fit it in LLM's context either by anstracring rules out of observations or summarize large content
     * Inference 💡️: Make educated guesses based on available information
     * Natural Language Conditions 📝: Easily express choices and conditions in natural language
 * Efficient and Measurable GPT context length 📐
