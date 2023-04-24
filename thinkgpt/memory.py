@@ -4,7 +4,7 @@ from typing import Dict, List, Union
 import numpy as np
 from langchain import PromptTemplate, LLMChain
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI, BaseLLM
 from docarray import Document, DocumentArray
 
 

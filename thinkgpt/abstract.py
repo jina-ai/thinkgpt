@@ -5,7 +5,8 @@ from typing import Dict, List, Any
 import numpy as np
 from langchain import PromptTemplate, LLMChain
 from langchain.schema import LLMResult, BaseOutputParser, Generation
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import BaseLLM, OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts.few_shot import FewShotPromptTemplate
 from docarray import Document, DocumentArray

@@ -1,7 +1,8 @@
 import re
 from typing import List, Optional, Type, Dict, Any, Union, Iterable
 
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.schema import LLMResult, BaseOutputParser, Generation
 from langchain.embeddings import OpenAIEmbeddings
 from docarray import DocumentArray, Document
@@ -19,7 +20,7 @@ from thinkgpt.summarize import SummarizeMixin, SummarizeChain
 
 
 
-class ThinkGPT(OpenAIChat, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, InferMixin, SummarizeMixin, extra=Extra.allow):
+class ThinkGPT(ChatOpenAI, MemoryMixin, AbstractMixin, RefineMixin, ConditionMixin, SelectMixin, InferMixin, SummarizeMixin, extra=Extra.allow):
     """Wrapper around OpenAI large language models to augment it with memory
 
     To use, you should have the ``openai`` python package installed, and the

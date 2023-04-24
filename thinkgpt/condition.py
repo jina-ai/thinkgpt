@@ -2,7 +2,7 @@ from typing import Dict, List, Any, Union
 
 from langchain import PromptTemplate, LLMChain
 from langchain.schema import LLMResult, BaseOutputParser, Generation
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI, BaseLLM
 from langchain.prompts.few_shot import FewShotPromptTemplate
 
 CONDITION_EXAMPLES = [

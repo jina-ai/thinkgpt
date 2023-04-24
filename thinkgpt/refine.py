@@ -2,7 +2,7 @@ import warnings
 from typing import Dict, List, Any
 
 from langchain import PromptTemplate, LLMChain
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI, BaseLLM
 
 
 REFINE_PROMPT = PromptTemplate(template="""
@@ -37,7 +37,7 @@ class RefineMixin:
 
 
 if __name__ == '__main__':
-    chain = RefineChain.from_llm(OpenAI(model_name="gpt-4"))
+    chain = RefineChain.from_llm(OpenAI(model_name="text-davinci-003"))
     print(chain.predict(
         content="""
 import re

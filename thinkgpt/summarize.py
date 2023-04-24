@@ -5,7 +5,7 @@ import warnings
 from typing import Dict, List, Any
 
 from langchain import PromptTemplate, LLMChain
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI, BaseLLM
 
 SUMMARIZE_PROMPT = PromptTemplate(template="""
 Shorten the following memory chunk of an autonomous agent from a first person perspective, using at most {max_tokens} tokens. {instruction_hint}:

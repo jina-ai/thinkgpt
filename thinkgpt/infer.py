@@ -2,7 +2,7 @@ import warnings
 from typing import Dict, List, Any
 
 from langchain import PromptTemplate, LLMChain
-from langchain.llms import OpenAI, BaseLLM, OpenAIChat
+from langchain.llms import OpenAI, BaseLLM
 from langchain.prompts.few_shot import FewShotPromptTemplate
 
 from thinkgpt.helper import LineSeparatorOutputParser
