@@ -55,10 +55,6 @@ class ConditionChain(LLMChain):
     def __init__(self, **kwargs):
         super().__init__(prompt=CONDITION_PROMPT, **kwargs)
 
-    @classmethod
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
-        return cls(prompt=CONDITION_PROMPT, llm=llm, verbose=verbose)
-
     def predict(self, question: str, instruction_hint: str = '', **kwargs: Any) -> bool:
         result = super().predict(question=question, instruction_hint=instruction_hint, **kwargs)
         return ConditionOutputParser().parse(result)

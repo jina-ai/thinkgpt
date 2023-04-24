@@ -25,10 +25,6 @@ class SummarizeChain(LLMChain, extra=Extra.allow):
         super().__init__(prompt=SUMMARIZE_PROMPT, **kwargs)
         self.summarizer_chunk_size = summarizer_chunk_size
 
-    @classmethod
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
-        return cls(prompt=SUMMARIZE_PROMPT, llm=llm, verbose=verbose)
-
     def predict(self, content, **kwargs: Any) -> str:
         return super().predict(
             content=content,

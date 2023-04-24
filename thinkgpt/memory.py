@@ -21,11 +21,6 @@ class ExecuteWithContextChain(LLMChain):
     def __init__(self, **kwargs):
         super().__init__(prompt=EXECUTE_WITH_CONTEXT_PROMPT, **kwargs)
 
-    @classmethod
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
-        """Get the response parser."""
-        return cls(prompt=EXECUTE_WITH_CONTEXT_PROMPT, llm=llm, verbose=verbose)
-
 
 class MemoryMixin:
     memory: DocumentArray

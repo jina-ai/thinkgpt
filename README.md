@@ -135,9 +135,10 @@ llm.select(
 )
 ```
 ```text
-Lion
+['Lion']
 ```
 
+You can also prompt the LLM to choose an exact number of answers using `num_choices`. By default, it's set to `None` which means the LLM will select any number he thinks it's correct.
 ## Use Cases 🚀
 Find out below example demos you can do with `thinkgpt`
 ### Teaching ThinkGPT a new language

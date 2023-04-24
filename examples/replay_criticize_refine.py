@@ -20,9 +20,12 @@ refined_memory = []
 for observation in llm.remember(limit=10):
     # Reflect on the old memory and self-criticize
     critic = llm.predict(f"What critic can you say about the following observation? If there is no critic, just say nothing. Observation: {observation}")
-    choice = llm.select('given the following observation and criticism, would you remove, refine or keep the observation?\n'
+    choices = llm.select('given the following observation and criticism, would you remove, refine or keep the observation?\n'
                         f'Observation: {observation}\n'
-                        f'Critics: {critic}', options=['refine', 'remove', 'keep'])
+                        f'Critics: {critic}', options=['refine', 'remove', 'keep'], num_choices=1)
+
+    choice = choices[0] if len(choices) == 1 else None
+
     if choice.lower() == 'refine':
         new_observation = llm.refine(content=observation, critics=[critic], instruction_hint='Just give the new observation and nothing else')
         print(f'refined "{observation}" into "{new_observation}"')

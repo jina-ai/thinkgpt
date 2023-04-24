@@ -22,9 +22,6 @@ class RefineChain(LLMChain):
     def __init__(self, **kwargs):
         super().__init__(prompt=REFINE_PROMPT, **kwargs)
 
-    @classmethod
-    def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
-        return cls(prompt=REFINE_PROMPT, llm=llm, verbose=verbose)
 
     def predict(self, instruction_hint: str = '', **kwargs: Any) -> str:
         return super().predict(instruction_hint=instruction_hint, **kwargs)
