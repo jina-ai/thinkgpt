@@ -84,12 +84,20 @@ Summarize content using the LLM itself.
 We offer 2 methods
 1. one-shot summarization using the LLM
 ```python
-llm.summarize(large_content, max_tokens= 1000, instruction_hint= 'Pay attention to code snippets, links and scientific terms.')
+llm.summarize(
+  large_content,
+  max_tokens= 1000,
+  instruction_hint= 'Pay attention to code snippets, links and scientific terms.'
+)
 ```
 Since this technique relies on summarizing using a single LLM call, you can only pass content that does not exceed the LLM's context length.
 2. Chunked summarization
 ```python
-llm.chunked_summarize(very_large_content, max_tokens= 4096, instruction_hint= 'Pay attention to code snippets, links and scientific terms.')
+llm.chunked_summarize(
+  very_large_content,
+  max_tokens= 4096,
+  instruction_hint= 'Pay attention to code snippets, links and scientific terms.'
+)
 ```
 This technique relies on splitting the content into different chunks, summarizing each of those chunks and then combining them all together using an LLM.
 
