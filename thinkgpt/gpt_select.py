@@ -4,6 +4,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.schema import LLMResult, BaseOutputParser, Generation
 from langchain.llms import OpenAI, BaseLLM
 from langchain.prompts.few_shot import FewShotPromptTemplate
+from langchain.chat_models import ChatOpenAI
 
 SELECT_EXAMPLES = [
     {
@@ -52,6 +53,15 @@ class SelectOutputParser(BaseOutputParser[Optional[str]]):
 
 
 class SelectChain(LLMChain):
+    def __init__(self, select_examples: Optional[List] = None, **kwargs):
+        SELECT_PROMPT = FewShotPromptTemplate(
+            prefix="Choose the correct answer for the following question from the provided options.",
+            examples=select_examples or SELECT_EXAMPLES,
+            example_prompt=SELECT_EXAMPLE_PROMPT,
+            suffix="{instruction_hint}\nQuestion:\n{question}\nOptions:\n{options_text}\nAnswer:\n",
+            input_variables=["instruction_hint", "question", "options_text"]
+        )
+        super().__init__(prompt=SELECT_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, select_examples: Optional[List] = None, verbose: bool = True) -> LLMChain:
@@ -80,6 +90,6 @@ class SelectMixin:
 
 
 if __name__ == '__main__':
-    chain = SelectChain.from_llm(OpenAI(model_name="gpt-3.5-turbo"))
+    chain = SelectChain(llm=ChatOpenAI(model_name="gpt-3.5-turbo"))
     print(chain.predict(question="Which animal is known as the king of the jungle?",
                         options=["Lion", "Elephant", "Tiger", "Giraffe"], instruction_hint=""))

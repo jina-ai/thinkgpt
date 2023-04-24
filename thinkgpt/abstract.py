@@ -83,6 +83,8 @@ class RememberOutputParser(BaseOutputParser[Dict]):
 
 class AbstractChain(LLMChain):
     """Prompts the LLM to request to remember memory as needed"""
+    def __init__(self, **kwargs):
+        super().__init__(prompt=ABSTRACTION_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
@@ -103,7 +105,7 @@ class AbstractMixin:
 
 
 if __name__ == '__main__':
-    chain = AbstractChain.from_llm(OpenAI(model_name="gpt-4"))
+    chain = AbstractChain(llm=ChatOpenAI(model_name="gpt-3.5-turbo"))
     print(chain.predict(observations="\n".join([
         "in tunisian, I did not eat is \"ma khditech\"",
         "I did not work is \"ma khdemtech\"",

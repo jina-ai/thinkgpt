@@ -4,6 +4,7 @@ from typing import Dict, List, Any
 from langchain import PromptTemplate, LLMChain
 from langchain.llms import OpenAI, BaseLLM
 from langchain.prompts.few_shot import FewShotPromptTemplate
+from langchain.chat_models import ChatOpenAI
 
 from thinkgpt.helper import LineSeparatorOutputParser
 
@@ -50,6 +51,8 @@ INFERENCE_PROMPT = FewShotPromptTemplate(
 
 class InferChain(LLMChain):
     """Prompts the LLM to generate new observations based on the given facts"""
+    def __init__(self, **kwargs):
+        super().__init__(prompt=INFERENCE_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
@@ -70,7 +73,7 @@ class InferMixin:
 
 
 if __name__ == '__main__':
-    chain = InferChain.from_llm(OpenAI(model_name="gpt-3.5-turbo"))
+    chain = InferChain(llm=ChatOpenAI(model_name="gpt-3.5-turbo"))
     # examples from the paper https://arxiv.org/abs/2304.03442
     print(chain.predict(facts="\n".join([
         "Klaus Mueller is writing a research paper",

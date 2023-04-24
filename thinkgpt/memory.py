@@ -18,6 +18,8 @@ User request: {prompt}
 
 class ExecuteWithContextChain(LLMChain):
     """Prompts the LLM to execute a request with potential context"""
+    def __init__(self, **kwargs):
+        super().__init__(prompt=EXECUTE_WITH_CONTEXT_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:

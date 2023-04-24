@@ -4,6 +4,7 @@ from langchain import PromptTemplate, LLMChain
 from langchain.schema import LLMResult, BaseOutputParser, Generation
 from langchain.llms import OpenAI, BaseLLM
 from langchain.prompts.few_shot import FewShotPromptTemplate
+from langchain.chat_models import ChatOpenAI
 
 CONDITION_EXAMPLES = [
     {
@@ -51,6 +52,8 @@ class ConditionOutputParser(BaseOutputParser[Union[bool, str]]):
 
 
 class ConditionChain(LLMChain):
+    def __init__(self, **kwargs):
+        super().__init__(prompt=CONDITION_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
@@ -69,5 +72,5 @@ class ConditionMixin:
 
 
 if __name__ == '__main__':
-    chain = ConditionChain.from_llm(OpenAI(model_name="gpt-3.5-turbo"))
+    chain = ConditionChain(llm=ChatOpenAI(model_name="gpt-3.5-turbo"))
     print(chain.predict(question="Is 2+2 equal to 4?", instruction_hint=""))

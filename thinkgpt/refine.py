@@ -3,6 +3,7 @@ from typing import Dict, List, Any
 
 from langchain import PromptTemplate, LLMChain
 from langchain.llms import OpenAI, BaseLLM
+from langchain.chat_models import ChatOpenAI
 
 
 REFINE_PROMPT = PromptTemplate(template="""
@@ -18,6 +19,8 @@ critics:
 
 class RefineChain(LLMChain):
     """Prompts the LLM to request to remember memory as needed"""
+    def __init__(self, **kwargs):
+        super().__init__(prompt=REFINE_PROMPT, **kwargs)
 
     @classmethod
     def from_llm(cls, llm: BaseLLM, verbose: bool = True) -> LLMChain:
@@ -37,7 +40,7 @@ class RefineMixin:
 
 
 if __name__ == '__main__':
-    chain = RefineChain.from_llm(OpenAI(model_name="text-davinci-003"))
+    chain = RefineChain(llm=ChatOpenAI(model_name='gpt-3.5-turbo'))
     print(chain.predict(
         content="""
 import re

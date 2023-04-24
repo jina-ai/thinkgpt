@@ -44,18 +44,18 @@ class ThinkGPT(ChatOpenAI, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
         # TODO: offer more docarray backends
         self.memory = memory or DocumentArray()
         self.embeddings_model = OpenAIEmbeddings()
-        self.openai = OpenAI(model_name=kwargs.get('model_name'))
-        self.execute_with_context_chain = execute_with_context_chain or ExecuteWithContextChain.from_llm(
-            self.openai, verbose=verbose)
-        self.abstract_chain = abstract_chain or AbstractChain.from_llm(
-            self.openai, verbose=verbose)
-        self.refine_chain = refine_chain or RefineChain.from_llm(
-            self.openai, verbose=verbose)
-        self.condition_chain = condition_chain or ConditionChain.from_llm(
-            self.openai, verbose=verbose)
-        self.select_chain = select_chain or SelectChain.from_llm(self.openai, verbose=verbose)
-        self.infer_chain = infer_chain or InferChain.from_llm(self.openai, verbose=verbose)
-        self.summarize_chain = summarize_chain or SummarizeChain.from_llm(self.openai, verbose=verbose)  # Add this line
+        self.openai = ChatOpenAI(model_name=kwargs.get('model_name'))
+        self.execute_with_context_chain = execute_with_context_chain or ExecuteWithContextChain(
+            llm=self.openai, verbose=verbose)
+        self.abstract_chain = abstract_chain or AbstractChain(
+            llm=self.openai, verbose=verbose)
+        self.refine_chain = refine_chain or RefineChain(
+            llm=self.openai, verbose=verbose)
+        self.condition_chain = condition_chain or ConditionChain(
+            llm=self.openai, verbose=verbose)
+        self.select_chain = select_chain or SelectChain(llm=self.openai, verbose=verbose)
+        self.infer_chain = infer_chain or InferChain(llm=self.openai, verbose=verbose)
+        self.summarize_chain = summarize_chain or SummarizeChain(llm=self.openai, verbose=verbose)  # Add this line
         self.mem_cnt = 0
 
 

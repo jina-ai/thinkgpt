@@ -6,6 +6,7 @@ from typing import Dict, List, Any
 
 from langchain import PromptTemplate, LLMChain
 from langchain.llms import OpenAI, BaseLLM
+from langchain.chat_models import ChatOpenAI
 
 SUMMARIZE_PROMPT = PromptTemplate(template="""
 Shorten the following memory chunk of an autonomous agent from a first person perspective, using at most {max_tokens} tokens. {instruction_hint}:
@@ -21,8 +22,7 @@ class SummarizeChain(LLMChain, extra=Extra.allow):
                  summarizer_chunk_size: int = 3000,
                  **kwargs
                  ):
-        super().__init__(**kwargs)
-        # TODO: offer more docarray backends
+        super().__init__(prompt=SUMMARIZE_PROMPT, **kwargs)
         self.summarizer_chunk_size = summarizer_chunk_size
 
     @classmethod
@@ -64,7 +64,7 @@ class SummarizeMixin:
 
 
 if __name__ == '__main__':
-    chain = SummarizeChain.from_llm(OpenAI(model_name="gpt-3.5-turbo"))
+    chain = SummarizeChain(llm=ChatOpenAI(model_name="gpt-3.5-turbo"))
     print(chain.predict(
         content="""Artificial intelligence (AI) is intelligence demonstrated by machines, 
         unlike the natural intelligence displayed by humans and animals, which involves 
