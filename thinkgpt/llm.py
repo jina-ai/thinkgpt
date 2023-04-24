@@ -60,26 +60,26 @@ class ThinkGPT(ChatOpenAI, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
 
 
     def generate(
-            self, prompts: List[str], stop: Optional[List[str]] = None, remember: Union[int, List[str]] = 0
+            self, prompts: List[List[str]], stop: Optional[List[str]] = None, remember: Union[int, List[str]] = 0
     ) -> LLMResult:
         # only works for single prompt
         if len(prompts) > 1:
             raise Exception('only works for a single prompt')
-        prompt = prompts[0]
+        prompt = prompts[0][0]
         if isinstance(remember, int) and remember > 0:
             remembered_elements = self.remember(prompt, limit=5)
             result = self.execute_with_context_chain.predict(prompt=prompt, context='\n'.join(remembered_elements) if remembered_elements else 'Nothing')
         elif isinstance(remember, list):
             result = self.execute_with_context_chain.predict(prompt=prompt, context='\n'.join(remember))
         else:
-            return super().generate(prompts, stop=stop)
+            result = self.execute_with_context_chain.predict(prompt=prompt, context='Nothing')
 
         return LLMResult(generations=[[Generation(text=result)]])
 
     def predict(
             self, prompt: str, stop: Optional[List[str]] = None, remember: Union[int, List[str]] = 0
     ) -> str:
-        return self.generate([prompt], remember=remember).generations[0][0].text
+        return self.generate([[prompt]], remember=remember).generations[0][0].text
 
 
 if __name__ == '__main__':
