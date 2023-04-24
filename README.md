@@ -79,7 +79,7 @@ One of the applications is self-healing code generation implemented by projects 
 
 ### Compressing knowledge
 In case you want your knowledge to fit into the LLM's context, you can use the following techniques to compress it:
-#### Summerize content
+#### Summarize content
 Summarize content using the LLM itself.
 We offer 2 methods
 1. one-shot summarization using the LLM
