@@ -77,7 +77,23 @@ print('hello world')
 
 One of the applications is self-healing code generation implemented by projects like [gptdeploy](https://github.com/jina-ai/gptdeploy) and [wolverine](https://github.com/biobootloader/wolverine)
 
-### Induce rules from observations
+### Compressing knowledge
+In case you want your knowledge to fit into the LLM's context, you can use the following techniques to compress it:
+#### Summerize content
+Summarize content using the LLM itself.
+We offer 2 methods
+1. one-shot summarization using the LLM
+```python
+llm.summarize(large_content, max_tokens= 1000, instruction_hint= 'Pay attention to code snippets, links and scientific terms.')
+```
+Since this technique relies on summarizing using a single LLM call, you can only pass content that does not exceed the LLM's context length.
+2. Chunked summarization
+```python
+llm.chunked_summarize(very_large_content, max_tokens= 4096, instruction_hint= 'Pay attention to code snippets, links and scientific terms.')
+```
+This technique relies on splitting the content into different chunks, summarizing each of those chunks and then combining them all together using an LLM.
+
+#### Induce rules from observations
 Amount to higher level and more general observations from current observations:
 ```python
 llm.abstract(observations=[
