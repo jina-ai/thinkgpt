@@ -44,7 +44,7 @@ class ThinkGPT(ChatOpenAI, MemoryMixin, AbstractMixin, RefineMixin, ConditionMix
         # TODO: offer more docarray backends
         self.memory = memory or DocumentArray()
         self.embeddings_model = OpenAIEmbeddings()
-        self.openai = ChatOpenAI(model_name=kwargs.get('model_name'))
+        self.openai = ChatOpenAI(**kwargs)
         self.execute_with_context_chain = execute_with_context_chain or ExecuteWithContextChain(
             llm=self.openai, verbose=verbose)
         self.abstract_chain = abstract_chain or AbstractChain(
