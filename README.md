@@ -13,7 +13,6 @@ The library aims to help with the following:
     * Compress knowledge 🌐: Compress knowledge and fit it in LLM's context either by anstracring rules out of observations or summarize large content
     * Inference 💡️: Make educated guesses based on available information
     * Natural Language Conditions 📝: Easily express choices and conditions in natural language
-    * Finetuning 📚: Agents that can learn by finetuning (coming soon!)
 * Efficient and Measurable GPT context length 📐
 * Extremely easy setup and pythonic API 🎯 thanks to [DocArray](https://github.com/docarray/docarray)
 
