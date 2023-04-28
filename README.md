@@ -91,6 +91,7 @@ llm.summarize(
 )
 ```
 Since this technique relies on summarizing using a single LLM call, you can only pass content that does not exceed the LLM's context length.
+
 2. Chunked summarization
 ```python
 llm.chunked_summarize(
