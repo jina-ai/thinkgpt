@@ -34,3 +34,22 @@ class PythonREPL(BaseModel):
             # TODO: need stack trace as well
             error = str(e)
         return output, error
+
+
+def get_n_tokens(input: str, model_name: str = 'gpt-3.5-turbo'):
+    import tiktoken
+    enc = tiktoken.encoding_for_model(model_name)
+    res = enc.encode(input)
+    return len(res)
+
+
+def fit_context(text_elememts: List[str], max_tokens: int):
+    results = []
+    total_tokens = 0
+    for element in text_elememts:
+        total_tokens += get_n_tokens(element)
+        if total_tokens <= max_tokens:
+            results.append(element)
+        else:
+            break
+    return results
