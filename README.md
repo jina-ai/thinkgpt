@@ -46,6 +46,23 @@ print(llm.remember('Sending data with DocArray', limit=1))
 ['DocArray allows you to send your data, in an ML-native way.']
 ```
 
+Use the `limit` parameter to specify the maximum number of documents to retrieve.
+In case you want to fit documents into a certain context size, you can also use the `max_tokens` parameter to specify the maximum number of tokens to retrieve.
+For instance:
+```python
+from examples.knowledge_base import knowledge
+from thinkgpt.helper import get_n_tokens
+
+llm.memorize(knowledge)
+results = llm.remember('hello', max_tokens=1000, limit=1000)
+print(get_n_tokens(''.join(results)))
+```
+```text
+1000
+```
+However, keep in mind that concatenating documents with a separator will add more tokens to the final result.
+The `remember` method does not account for those tokens.
+
 ### Predicting with context from long memory
 ```python
 from examples.knowledge_base import knowledge
