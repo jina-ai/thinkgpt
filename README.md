@@ -1,4 +1,7 @@
 # ThinkGPT 🧠🤖
+<a href="https://discord.jina.ai"><img src="https://img.shields.io/discord/1106542220112302130?logo=discord&logoColor=white&style=flat-square"></a>
+
+
 ThinkGPT is a Python library aimed at implementing Chain of Thoughts for Large Language Models (LLMs), prompting the model to think, reason, and to create generative agents. 
 The library aims to help with the following:
 * solve limited context with long memory and compressed knowledge
