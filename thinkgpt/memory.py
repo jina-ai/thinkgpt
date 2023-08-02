@@ -3,7 +3,8 @@ from typing import Dict, List, Union, Optional
 
 import numpy as np
 from langchain import PromptTemplate, LLMChain
-from langchain.embeddings import OpenAIEmbeddings
+from langchain.embeddings import OpenAIEmbeddings, HuggingFaceEmbeddings
+
 from langchain.llms import OpenAI, BaseLLM
 from docarray import Document, DocumentArray
 
@@ -27,6 +28,7 @@ class MemoryMixin:
     memory: DocumentArray
     mem_cnt: int
     embeddings_model: OpenAIEmbeddings
+    embeddings = HuggingFaceEmbeddings(model_name='all-MiniLM-L6-v2')
 
     def memorize(self, concept: Union[str, Document, DocumentArray, List]):
         self.mem_cnt += 1
