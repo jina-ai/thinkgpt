@@ -35,7 +35,7 @@ examples = [
         "forth element is (4, 9)",
     ]),
     "rules": '\n'.join([
-        "The relationship between the first element X and the second element Y in the set A can be described by a function: y = f(x) = 2x - 1",
+        "The relationship between the first element X and the second element Y in the set A can be described by a function: y = f(x) = 2x + 1",
     ])
   },
   {
